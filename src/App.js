@@ -20,15 +20,18 @@ const theme = extendTheme({
 });
 
 function App() {
-  const tempTasks = [
-    new Task("Купить молоко", true),
-    new Task("Отжуманя 20 раз", false),
-    new Task("Поработать", true),
-    new Task("Извинится", false),
-  ]
-  const[tasks, setTasks] = useState(tempTasks)
+  const[tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem('tasks')
+    return savedTasks ?
+      JSON.parse(savedTasks).map((taskJson) => new Task(taskJson.text, taskJson.completed, taskJson.id))
+      : []
+  })
   const notCompletedTasks = tasks.filter(task => !task.completed)
   const completedTasks = tasks.filter(task => task.completed)
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   function handleTaskStatusChange(task) {
     task.toggle()
@@ -70,7 +73,7 @@ function App() {
       )}
       <Divider/>
       <Stack direction={'row'} spacing={1}>
-        <Button variant='soft' onClick={() => setTasks([])}>Очистить список</Button>
+        <Button variant='soft' onClick={() => setTasks([])}>Очистить все</Button>
         <Button variant='soft' onClick={() => setTasks(notCompletedTasks)}>Очистить выполненные</Button>
       </Stack>
     </CssVarsProvider>
