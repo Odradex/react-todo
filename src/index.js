@@ -1,17 +1,40 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import "@fontsource/inter";
+import Sheet from "@mui/joy/Sheet";
+import { Typography } from "@mui/joy";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import App from "./App";
+
+const root = createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <StrictMode>
+    <Typography variant="solid" color="primary" level="h2" 
+        sx={{
+          width: 400,
+          m: 0,
+          textAlign: 'center',
+          borderRadius: 'md',
+          boxShadow: 'lg',
+        }}>
+        Список Задач
+      </Typography>
+    <Sheet variant="plain"
+      sx={{
+        width: 400,
+        height: "auto",
+        my: 2,
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: 'lg',
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 'md',
+      }}>
+      
+      <App/>
+    </Sheet>
+  </StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
